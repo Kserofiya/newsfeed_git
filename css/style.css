@@ -70,14 +70,15 @@ a {
     cursor: pointer;
 }
 
+.header__navigation .navigation__link {
+    color: var(--color-primary);
+}
+
 .header__navigation .navigation__link_active,
 .header__navigation .navigation__link:hover {
     color: var(--color-accent);
 }
 
-.header__navigation .navigation__link {
-    color: var(--color-primary);
-}
 
 .header__navigation .navigation__logo {
     padding-right: 32px;
