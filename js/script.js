@@ -8,6 +8,18 @@ const smallNewsTemplate = document.getElementById('small-article-item');
 const mainNewsContainer = document.querySelector('.articles__big-column');
 const smallNewsContainer = document.querySelector('.articles__small-column');
 
+const escapeString = (string) => {
+    const symbols = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+    }
+
+    return string.replace(/[&<>]/g, (tag) => {
+        return symbols[tag] || tag;
+    })
+}
+
 mainNews.forEach((item) => {
     const categoryData = data.categories.find((categoryItem) => categoryItem.id === item.category_id);
     const sourceData = data.sources.find((sourceItem) => sourceItem.id === item.source_id);
@@ -16,13 +28,13 @@ mainNews.forEach((item) => {
     article.classList.add('main-article');
     article.innerHTML = `
         <div class="main-article__image-container">
-            <img class="main-article__image" src="${item.image}" alt="newsfeed_img_1">
+            <img class="main-article__image" src="${encodeURI(item.image)}" alt="newsfeed_img_1">
         </div>
         <div class="main-article__content">
-            <span class="article-category main-article__category">${categoryData.name}</span>
-            <h2 class="main-article__title">${item.title}</h2>
-            <p class="main-article__text">${item.description}</p>
-            <span class="article-source main-article__source">${sourceData.name}</span>
+            <span class="article-category main-article__category">${escapeString(categoryData.name)}</span>
+            <h2 class="main-article__title">${escapeString(item.title)}</h2>
+            <p class="main-article__text">${escapeString(item.description)}</p>
+            <span class="article-source main-article__source">${escapeString(sourceData.name)}</span>
         </div>
     `;
     mainNewsContainer.appendChild(article);
@@ -35,10 +47,10 @@ smallNews.forEach((item) => {
     const article = document.createElement('article');
     article.classList.add('small-article');
     article.innerHTML = `
-        <h2 class="small-article__title">${item.title}</h2>
+        <h2 class="small-article__title">${escapeString(item.title)}</h2>
         <p class="small-article__caption">
             <span class="article-date small-article__date">${dateData}</span>
-            <span class="article-source small-article__source">${sourceData.name}</span>
+            <span class="article-source small-article__source">${escapeString(sourceData.name)}</span>
         </p>
     `;
 
